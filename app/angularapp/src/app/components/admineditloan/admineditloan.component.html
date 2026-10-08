@@ -1,0 +1,33 @@
+<app-adminnav></app-adminnav>
+<main class="page">
+  <section class="card">
+    <button class="back" type="button" (click)="goBack()">Back</button>
+    <h1>Edit Loan</h1>
+    <div class="rule"></div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <ng-container *ngFor="let field of fields">
+        <label [for]="field.key">{{ field.label }}<span>*</span></label>
+        <input
+          [id]="field.key"
+          [type]="field.type"
+          [formControlName]="field.key"
+          [attr.min]="field.type === 'number' ? (field.key === 'RepaymentTenure' ? '1' : '0.01') : null"
+          [attr.step]="field.type === 'number' ? (field.key === 'RepaymentTenure' ? '1' : '0.01') : null"
+          [attr.maxlength]="field.maxLength"
+        />
+        <div class="validation" *ngIf="invalid(field.key)">{{ errorMessage(field.key, field.label) }}</div>
+      </ng-container>
+
+      <div class="validation" *ngIf="serverError">{{ serverError }}</div>
+      <button class="update" type="submit" [disabled]="loading">{{ loading ? 'Updating...' : 'Update Loan' }}</button>
+    </form>
+  </section>
+</main>
+
+<div class="overlay" *ngIf="success">
+  <div class="modal">
+    <p>Updated successfully</p>
+    <button type="button" (click)="finish()">OK</button>
+  </div>
+</div>

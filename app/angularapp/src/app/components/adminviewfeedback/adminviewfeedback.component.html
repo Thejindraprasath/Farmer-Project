@@ -1,0 +1,37 @@
+<app-adminnav></app-adminnav>
+<main class="page">
+    <section class="content">
+        <h1>Feedback Details</h1>
+        <div class="rule"></div>
+        <div class="error" *ngIf="error">{{error}}</div>
+        <div class="empty" *ngIf="!error && feedbacks.length===0">No data found</div>
+        <table *ngIf="feedbacks.length">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>User Name</th>
+                    <th>Feedback</th>
+                    <th>Posted Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let f of feedbacks;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{f.User?.Username || f.UserId}}</td>
+                    <td>{{f.FeedbackText}}</td>
+                    <td>{{f.Date | date:'dd/MM/yyyy'}}</td>
+                    <td><button (click)="selected=f">Show Profile</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<div class="overlay" *ngIf="selected">
+    <div class="modal">
+        <h3>User Details:</h3>
+        <p>Email: {{selected.User?.Email || '-'}}</p>
+        <p>Username: {{selected.User?.Username || '-'}}</p>
+        <p>Mobile Number: {{selected.User?.MobileNumber || '-'}}</p><button (click)="selected=null">Close</button>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<main class="page auth">
+  <aside class="auth-art" aria-hidden="true">
+    <img src="assets/farm-hero.svg" alt="" />
+    <div class="auth-note">
+      <strong>Finance that grows with your harvest.</strong>
+      <span>Apply for farm loans and follow every request in one place.</span>
+    </div>
+  </aside>
+  <section class="form-card">
+    <h1>Login</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <label for="email">Email<span>*</span></label>
+      <input id="email" formControlName="email" type="email" autocomplete="email" />
+      <div class="validation" *ngIf="show('email','required')">Email is required</div>
+      <div class="validation" *ngIf="show('email','strictEmail')">Please enter a valid email address</div>
+
+      <label for="password">Password<span>*</span></label>
+      <input id="password" formControlName="password" type="password" autocomplete="current-password" />
+      <div class="validation" *ngIf="show('password','required')">Password is required</div>
+      <div class="validation" *ngIf="serverError">{{ serverError }}</div>
+
+      <button type="submit" [disabled]="loading">{{ loading ? 'Logging in...' : 'Login' }}</button>
+    </form>
+    <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+  </section>
+</main>

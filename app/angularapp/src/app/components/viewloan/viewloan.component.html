@@ -1,0 +1,51 @@
+<app-adminnav></app-adminnav>
+<main class="page">
+    <section class="content">
+        <h1>Loan Details</h1>
+        <div class="rule"></div>
+        <input class="search" [(ngModel)]="search" placeholder="Search..." />
+        <div class="error" *ngIf="loadError">{{ loadError }}</div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Loan Type</th>
+                        <th>Maximum Amount</th>
+                        <th>Interest Rate</th>
+                        <th>Repayment Tenure</th>
+                        <th>Eligibility Criteria</th>
+                        <th>Documents Required</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let loan of filteredLoans; let i=index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ loan.LoanType }}</td>
+                        <td>₹{{ loan.MaximumAmount }}</td>
+                        <td>{{ loan.InterestRate }}%</td>
+                        <td>{{ loan.RepaymentTenure }} months</td>
+                        <td>{{ loan.Eligibility }}</td>
+                        <td>{{ loan.DocumentsRequired }}</td>
+                        <td>{{ loan.Description }}</td>
+                        <td class="actions"><button class="edit" (click)="edit(loan)">Edit</button><button
+                                class="delete" (click)="askDelete(loan)">Delete</button></td>
+                    </tr>
+                    <tr *ngIf="filteredLoans.length === 0">
+                        <td colspan="9" class="empty">No data found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<div class="overlay" *ngIf="selectedLoan">
+    <div class="modal">
+        <p>Are you sure you want to delete?</p>
+        <div class="modal-actions"><button class="delete" (click)="confirmDelete()">Yes, Delete</button><button
+                class="cancel" (click)="selectedLoan=null">Cancel</button></div>
+        <div class="error" *ngIf="deleteError">{{ deleteError }}</div>
+    </div>
+</div>

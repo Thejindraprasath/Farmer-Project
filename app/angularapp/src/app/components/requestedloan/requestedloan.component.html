@@ -1,0 +1,61 @@
+<app-adminnav></app-adminnav>
+<main class="page">
+    <section class="content">
+        <h1>Loan Requests for Approval</h1>
+        <div class="rule"></div>
+        <div class="filters"><input [(ngModel)]="search" placeholder="Search by Loan Type..." /><label>Filter by
+                Status:</label><select [(ngModel)]="statusFilter">
+                <option value="all">All</option>
+                <option value="0">Pending</option>
+                <option value="1">Approved</option>
+                <option value="2">Rejected</option>
+            </select></div>
+        <div class="error" *ngIf="error">{{error}}</div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Username</th>
+                        <th>Loan Type</th>
+                        <th>Farm Location</th>
+                        <th>Submission Date</th>
+                        <th>Farm Size (Acres)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of filtered; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.User?.Username || item.UserId}}</td>
+                        <td>{{item.Loan?.LoanType || item.LoanId}}</td>
+                        <td>{{item.FarmLocation}}</td>
+                        <td>{{item.SubmissionDate | date:'yyyy-MM-dd'}}</td>
+                        <td>{{item.FarmSizeInAcres}}</td>
+                        <td><span class="badge" [class.badge-approved]="item.LoanStatus === 1" [class.badge-rejected]="item.LoanStatus === 2" [class.badge-pending]="item.LoanStatus !== 1 && item.LoanStatus !== 2">{{statusText(item.LoanStatus)}}</span></td>
+                        <td class="actions"><button class="show" (click)="selected=item">Show More</button><button
+                                *ngIf="item.LoanStatus !== 1" class="approve"
+                                (click)="setStatus(item,1)">Approve</button><button *ngIf="item.LoanStatus !== 2"
+                                class="reject" (click)="setStatus(item,2)">Reject</button></td>
+                    </tr>
+                    <tr *ngIf="filtered.length===0">
+                        <td colspan="8" class="empty">Oops! No records found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<div class="overlay" *ngIf="selected">
+    <div class="modal"><button class="x" (click)="selected=null">×</button>
+        <p><b>Farmer's Address:</b> {{selected.FarmerAddress}}</p>
+        <p><b>Farm Purpose:</b> {{selected.FarmPurpose}}</p>
+        <p><b>Proof:</b></p><img *ngIf="isImage(selected.File)" [src]="selected.File" alt="Proof" /><a
+            class="proof-link" *ngIf="isPdf(selected.File) || isExternalProof(selected.File)" [href]="selected.File"
+            target="_blank" rel="noopener">Open Proof</a>
+        <div class="proof-text"
+            *ngIf="!isImage(selected.File) && !isPdf(selected.File) && !isExternalProof(selected.File)">{{selected.File
+            || 'No proof available'}}</div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<app-adminnav *ngIf="auth.getUserRole() === 'Admin'; else nonAdmin"></app-adminnav>
+<ng-template #nonAdmin>
+  <app-usernav *ngIf="auth.getUserRole() === 'User'; else publicNav"></app-usernav>
+</ng-template>
+<ng-template #publicNav><app-navbar></app-navbar></ng-template>
+<main class="home-shell">
+  <section class="hero">
+    <img class="hero-art" src="assets/farm-hero.svg" alt="" aria-hidden="true" />
+    <p class="hero-tag" aria-hidden="true">Finance that grows with your harvest.</p>
+  </section>
+  <section class="intro-card">
+    <h1>Farm Financer</h1>
+    <p>
+      Farm Financer is a digital platform designed to support farmers and agricultural businesses in securing reliable
+      and flexible financial assistance.
+      The platform offers a comprehensive selection of loan options tailored to various agricultural needs, such as crop
+      cultivation, farm equipment purchases,
+      and land expansion. Each loan is accompanied by detailed descriptions, competitive interest rates, and clear terms
+      and conditions, empowering users to make
+      informed decisions. Farm Financer ensures that farmers can access the financial support they need with ease,
+      providing a seamless and user-friendly application
+      process to help grow their agricultural ventures.
+    </p>
+  </section>
+  <ul class="pillars" aria-label="What Farm Financer supports">
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 13C12 8 9 6 4 6c0 5 3 7 8 7z"/><path d="M12 16c0-4 3-6 8-6 0 4-3 6-8 6z"/></svg><strong>Crop cultivation</strong><span>Loan options tailored to the needs of the growing season.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="17" r="3.5"/><circle cx="18" cy="18" r="2.5"/><path d="M3.5 17V10h7l2 4h5.5V9h-3M10 10V6h4"/></svg><strong>Farm equipment</strong><span>Financing for equipment purchases that keep the farm moving.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20l4-9 4 5 3-6 3 10"/><path d="M12 4v3M9 5.5l1.5 1.5M15 5.5 13.5 7"/></svg><strong>Land expansion</strong><span>Support to help grow your agricultural ventures.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></svg><strong>Clear terms</strong><span>Detailed descriptions, interest rates, and conditions for every loan.</span></li>
+  </ul>
+</main>

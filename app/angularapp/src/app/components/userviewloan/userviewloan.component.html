@@ -1,0 +1,16 @@
+<app-usernav></app-usernav>
+    <main class="page"><section class="content">
+      <h1>Available Loans</h1><div class="rule"></div>
+      <input class="search" [(ngModel)]="search" placeholder="Search..." />
+      <div class="error" *ngIf="error">{{error}}</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>S.No</th><th>Loan Type</th><th>Loan Description</th><th>Interest Rate</th><th>Maximum Amount</th><th>Repayment Tenure (Months)</th><th>Eligibility</th><th>Documents Required</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let loan of filtered; let i=index">
+            <td>{{i+1}}</td><td>{{loan.LoanType}}</td><td>{{loan.Description}}</td><td>{{loan.InterestRate}}%</td><td>₹{{loan.MaximumAmount}}</td><td>{{loan.RepaymentTenure}}</td><td>{{loan.Eligibility}}</td><td>{{loan.DocumentsRequired}}</td>
+            <td><button [class.applied]="isApplied(loan)" [class.apply]="!isApplied(loan)" [disabled]="isApplied(loan)" (click)="apply(loan)">{{isApplied(loan) ? 'Applied' : 'Apply'}}</button></td>
+          </tr>
+          <tr *ngIf="filtered.length===0"><td colspan="9" class="empty">Oops! No records Found</td></tr>
+        </tbody>
+      </table></div>
+    </section></main>

@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<main class="page auth">
+    <aside class="auth-art" aria-hidden="true">
+      <img src="assets/farm-hero.svg" alt="" />
+      <div class="auth-note">
+        <strong>Start your farm's next season with support.</strong>
+        <span>Create an account to explore loans and apply online.</span>
+      </div>
+    </aside>
+    <section class="form-card">
+        <h1>Registration</h1>
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+            <label for="username">Username<span>*</span></label>
+            <input id="username" formControlName="username" autocomplete="username" maxlength="30" />
+            <div class="validation" *ngIf="show('username','required') || show('username','whitespace')">Username is
+                required</div>
+            <div class="validation" *ngIf="show('username','maxlength')">Username cannot exceed 30 characters</div>
+
+            <label for="email">Email<span>*</span></label>
+            <input id="email" formControlName="email" type="email" autocomplete="email" maxlength="254" />
+            <div class="validation" *ngIf="show('email','required')">Email is required</div>
+            <div class="validation" *ngIf="show('email','strictEmail')">Please enter a valid email address</div>
+
+            <label for="password">Password<span>*</span></label>
+            <input id="password" formControlName="password" type="password" autocomplete="new-password" />
+            <div class="validation" *ngIf="show('password','required')">Password is required</div>
+            <div class="validation" *ngIf="show('password','minlength')">Password must be at least 6 characters</div>
+            <div class="validation" *ngIf="show('password','pattern')">Password must include at least one uppercase
+                letter, one lowercase letter, one digit, and one special character</div>
+
+            <label for="confirmPassword">Confirm Password<span>*</span></label>
+            <input id="confirmPassword" formControlName="confirmPassword" type="password" autocomplete="new-password" />
+            <div class="validation" *ngIf="show('confirmPassword','required')">Confirm Password is required</div>
+            <div class="validation"
+                *ngIf="form.hasError('passwordMismatch') && (form.controls.confirmPassword.touched || submitted)">
+                Passwords do not match</div>
+
+            <label for="mobileNumber">Mobile Number<span>*</span></label>
+            <input id="mobileNumber" formControlName="mobileNumber" inputmode="numeric" maxlength="10"
+                autocomplete="tel" />
+            <div class="validation" *ngIf="show('mobileNumber','required')">Mobile number is required</div>
+            <div class="validation" *ngIf="show('mobileNumber','pattern')">Mobile number must be 10 digits</div>
+
+            <label for="userRole">Role<span>*</span></label>
+            <select id="userRole" formControlName="userRole">
+                <option value="">Select a role</option>
+                <option value="Admin">ADMIN</option>
+                <option value="User">USER</option>
+            </select>
+            <div class="validation" *ngIf="show('userRole','required')">Role is required</div>
+
+            <div class="validation server" *ngIf="serverError">{{ serverError }}</div>
+            <button type="submit" [disabled]="loading">{{ loading ? 'Registering...' : 'Register' }}</button>
+        </form>
+    </section>
+</main>

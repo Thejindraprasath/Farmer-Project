@@ -1,0 +1,32 @@
+<app-adminnav></app-adminnav>
+<main class="page">
+  <section class="card">
+    <h1>Create New Loan</h1>
+    <div class="rule"></div>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <ng-container *ngFor="let field of fields">
+        <label [for]="field.key">{{ field.label }}<span>*</span></label>
+        <input
+          [id]="field.key"
+          [type]="field.type"
+          [formControlName]="field.key"
+          [placeholder]="field.placeholder"
+          [attr.min]="field.type === 'number' ? (field.key === 'RepaymentTenure' ? '1' : '0.01') : null"
+          [attr.step]="field.type === 'number' ? (field.key === 'RepaymentTenure' ? '1' : '0.01') : null"
+          [attr.maxlength]="field.maxLength"
+        />
+        <div class="validation" *ngIf="invalid(field.key)">{{ errorMessage(field.key, field.label) }}</div>
+      </ng-container>
+
+      <div class="validation all" *ngIf="submitted && hasMissingFields()">All fields are required</div>
+      <div class="validation all" *ngIf="serverError">{{ serverError }}</div>
+      <button type="submit" [disabled]="loading">{{ loading ? 'Submitting...' : 'Submit' }}</button>
+    </form>
+  </section>
+</main>
+<div class="overlay" *ngIf="success">
+  <div class="modal">
+    <p>Successfully Added!</p>
+    <button type="button" (click)="closeSuccess()">Ok</button>
+  </div>
+</div>

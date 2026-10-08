@@ -1,0 +1,13 @@
+<nav class="topbar">
+  <a class="brand" routerLink="/home">FARMFINANCER</a>
+  <div class="links" *ngIf="!auth.isLoggedIn(); else loggedIn">
+    <a routerLink="/register" routerLinkActive="active">Register</a>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+  </div>
+  <ng-template #loggedIn>
+    <div class="links">
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+      <button type="button" (click)="logout()">Logout</button>
+    </div>
+  </ng-template>
+</nav>

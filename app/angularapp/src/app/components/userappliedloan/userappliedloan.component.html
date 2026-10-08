@@ -1,0 +1,38 @@
+<app-usernav></app-usernav>
+<main class="page">
+    <section class="content">
+        <h1>Applied Loans</h1>
+        <div class="rule"></div><input class="search" [(ngModel)]="search" placeholder="Search..." />
+        <div class="error" *ngIf="error">{{error}}</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Loan Name</th>
+                    <th>Submission Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let a of filtered;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{a.Loan?.LoanType || a.LoanId}}</td>
+                    <td>{{a.SubmissionDate|date:'yyyy-MM-dd'}}</td>
+                    <td><span class="badge" [class.badge-approved]="a.LoanStatus === 1" [class.badge-rejected]="a.LoanStatus === 2" [class.badge-pending]="a.LoanStatus !== 1 && a.LoanStatus !== 2">{{statusText(a.LoanStatus)}}</span></td>
+                    <td><button class="delete" (click)="pendingDelete=a">Delete</button></td>
+                </tr>
+                <tr *ngIf="filtered.length===0">
+                    <td colspan="5" class="empty">Oops! No records Found</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<div class="overlay" *ngIf="pendingDelete">
+    <div class="modal">
+        <p>Are you sure you want to delete?</p>
+        <div><button class="yes" (click)="confirmDelete()">Yes, Delete</button><button class="cancel"
+                (click)="pendingDelete=null">Cancel</button></div>
+    </div>
+</div>

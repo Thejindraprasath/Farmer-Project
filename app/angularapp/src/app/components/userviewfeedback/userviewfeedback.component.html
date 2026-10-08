@@ -1,0 +1,33 @@
+<app-usernav></app-usernav>
+<main class="page">
+    <section class="content">
+        <h1>My Feedback</h1>
+        <div class="rule"></div>
+        <div class="error" *ngIf="error">{{error}}</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Feedback</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let f of feedbacks;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{f.FeedbackText}}</td>
+                    <td><button class="delete" (click)="pendingDelete=f">Delete</button></td>
+                </tr>
+                <tr *ngIf="feedbacks.length===0">
+                    <td colspan="3" class="empty">No data found</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<div class="overlay" *ngIf="pendingDelete">
+    <div class="modal">
+        <p>Are you sure you want to delete?</p><button class="yes" (click)="confirmDelete()">Yes, Delete</button><button
+            class="cancel" (click)="pendingDelete=null">Cancel</button>
+    </div>
+</div>

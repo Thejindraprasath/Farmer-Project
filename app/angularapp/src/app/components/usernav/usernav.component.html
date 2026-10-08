@@ -1,0 +1,23 @@
+<nav class="topbar">
+    <a class="brand" routerLink="/home">FARMFINANCER</a>
+    <div class="links">
+        <span class="identity">{{ displayName }} / User</span>
+        <a routerLink="/home" routerLinkActive="active">Home</a>
+        <a routerLink="/user/loans" routerLinkActive="active">Loans</a>
+        <a routerLink="/user/applied-loans" routerLinkActive="active">Applied Loan</a>
+        <div class="feedback-menu">
+            <button class="menu-link" type="button">Feedback</button>
+            <div class="submenu">
+                <a routerLink="/user/feedback/add" routerLinkActive="active">Post Feedback</a>
+                <a routerLink="/user/feedback/view" routerLinkActive="active">My Feedbacks</a>
+            </div>
+        </div>
+        <button class="logout" type="button" (click)="showLogout=true">Logout</button>
+    </div>
+</nav>
+<div class="overlay" *ngIf="showLogout">
+    <div class="modal">
+        <p>Are you sure you want to logout?</p><button class="yes" (click)="confirmLogout()">Yes, Logout</button><button
+            class="cancel" (click)="showLogout=false">Cancel</button>
+    </div>
+</div>

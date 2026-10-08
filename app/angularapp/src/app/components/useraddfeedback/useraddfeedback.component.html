@@ -1,0 +1,21 @@
+<app-usernav></app-usernav>
+<main class="page">
+  <h1>Add Feedback</h1>
+  <section class="card">
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <label for="FeedbackText">Feedback<span>*</span></label>
+      <textarea id="FeedbackText" formControlName="FeedbackText" maxlength="1000"></textarea>
+      <small *ngIf="submitted && (form.controls['FeedbackText'].hasError('required') || form.controls['FeedbackText'].hasError('whitespace'))">*Feedback is required</small>
+      <small *ngIf="submitted && form.controls['FeedbackText'].hasError('maxlength')">*Feedback cannot exceed 1000 characters</small>
+      <small *ngIf="error">{{ error }}</small>
+      <button type="submit" [disabled]="loading">{{ loading ? 'Submitting...' : 'Submit' }}</button>
+    </form>
+  </section>
+</main>
+
+<div class="overlay" *ngIf="success">
+  <div class="modal">
+    <p>Successfully Added!</p>
+    <button type="button" (click)="closeSuccess()">OK</button>
+  </div>
+</div>
